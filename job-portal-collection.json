@@ -1,0 +1,53 @@
+{
+  "info": {
+    "name": "AI Job Portal API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:5000/api/v1/auth/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"John Doe\", \"email\": \"john@example.com\", \"password\": \"password123\", \"role\": \"CANDIDATE\"}",
+              "options": {
+                "raw": { "language": "json" }
+              }
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:5000/api/v1/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\": \"john@example.com\", \"password\": \"password123\"}",
+              "options": {
+                "raw": { "language": "json" }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Jobs",
+      "item": [
+        {
+          "name": "Get All Jobs",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:5000/api/v1/jobs"
+          }
+        }
+      ]
+    }
+  ]
+}
