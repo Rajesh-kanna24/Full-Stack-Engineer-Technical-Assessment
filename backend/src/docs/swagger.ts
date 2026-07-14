@@ -3,39 +3,43 @@ export const swaggerDocument = {
   info: {
     title: 'AI Job Portal API',
     version: '1.0.0',
-    description: 'API Documentation for AI Job Portal',
+    description: 'Production-ready job portal API with auth, jobs, dashboards, and scraping.',
   },
-  servers: [
-    {
-      url: 'http://localhost:5000/api/v1',
-      description: 'Local development server',
-    },
-  ],
+  servers: [{ url: 'http://localhost:5000/api/v1', description: 'Local development server' }],
   components: {
     securitySchemes: {
-      bearerAuth: {
-        type: 'http',
-        scheme: 'bearer',
-        bearerFormat: 'JWT',
-      },
+      bearerAuth: { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
     },
   },
-  security: [
-    {
-      bearerAuth: [],
-    },
-  ],
+  security: [{ bearerAuth: [] }],
   paths: {
     '/health': {
       get: {
-        summary: 'Check API Health',
-        responses: {
-          '200': {
-            description: 'Successful response',
-          },
-        },
+        summary: 'Health check',
+        responses: { '200': { description: 'API reachable' } },
       },
     },
-    // Add additional paths here for full docs
+    '/auth/register': {
+      post: {
+        summary: 'Register a new user',
+        responses: { '201': { description: 'Created' } },
+      },
+    },
+    '/jobs': {
+      get: {
+        summary: 'List jobs',
+        responses: { '200': { description: 'Jobs returned' } },
+      },
+      post: {
+        summary: 'Create a job',
+        responses: { '201': { description: 'Created' } },
+      },
+    },
+    '/scrape/jobs': {
+      post: {
+        summary: 'Trigger job scraping',
+        responses: { '200': { description: 'Scrape summary' } },
+      },
+    },
   },
 };

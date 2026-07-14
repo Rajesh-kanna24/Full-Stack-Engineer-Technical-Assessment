@@ -2,6 +2,15 @@ import prisma from '../database/prisma';
 
 export class RefreshTokenRepository {
   async create(token: string, userId: string, expiresAt: Date) {
+    const existing = await prisma.refreshToken.findUnique({ where: { token } });
+
+    if (existing) {
+      return await prisma.refreshToken.update({
+        where: { token },
+        data: { userId, expiresAt },
+      });
+    }
+
     return await prisma.refreshToken.create({
       data: { token, userId, expiresAt },
     });
