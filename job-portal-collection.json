@@ -15,9 +15,7 @@
             "body": {
               "mode": "raw",
               "raw": "{\"name\": \"John Doe\", \"email\": \"john@example.com\", \"password\": \"password123\", \"role\": \"CANDIDATE\"}",
-              "options": {
-                "raw": { "language": "json" }
-              }
+              "options": { "raw": { "language": "json" } }
             }
           }
         },
@@ -29,9 +27,7 @@
             "body": {
               "mode": "raw",
               "raw": "{\"email\": \"john@example.com\", \"password\": \"password123\"}",
-              "options": {
-                "raw": { "language": "json" }
-              }
+              "options": { "raw": { "language": "json" } }
             }
           }
         }
@@ -42,10 +38,28 @@
       "item": [
         {
           "name": "Get All Jobs",
+          "request": { "method": "GET", "url": "http://localhost:5000/api/v1/jobs" }
+        },
+        {
+          "name": "Create Job",
           "request": {
-            "method": "GET",
-            "url": "http://localhost:5000/api/v1/jobs"
+            "method": "POST",
+            "url": "http://localhost:5000/api/v1/jobs",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\": \"Senior Frontend Engineer\", \"companyName\": \"Innov2Grow\", \"location\": \"Remote\", \"employmentType\": \"FULL_TIME\", \"workMode\": \"REMOTE\", \"salary\": \"$140k - $180k\", \"experience\": \"3+ years\", \"skills\": [\"React\", \"Next.js\"], \"description\": \"Build modern AI-powered experiences\"}",
+              "options": { "raw": { "language": "json" } }
+            }
           }
+        }
+      ]
+    },
+    {
+      "name": "Scrape",
+      "item": [
+        {
+          "name": "Trigger Scraper",
+          "request": { "method": "POST", "url": "http://localhost:5000/api/v1/scrape/jobs" }
         }
       ]
     }

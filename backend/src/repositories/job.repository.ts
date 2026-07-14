@@ -1,8 +1,7 @@
 import prisma from '../database/prisma';
-import { Prisma } from '@prisma/client';
 
 export class JobRepository {
-  async create(data: Prisma.JobUncheckedCreateInput) {
+  async create(data: any) {
     return await prisma.job.create({ data, include: { company: true } });
   }
 
@@ -27,7 +26,7 @@ export class JobRepository {
     });
   }
 
-  async update(id: string, data: Prisma.JobUpdateInput) {
+  async update(id: string, data: any) {
     return await prisma.job.update({ where: { id }, data, include: { company: true } });
   }
 
@@ -38,7 +37,7 @@ export class JobRepository {
     });
   }
 
-  async apply(data: Prisma.ApplicationUncheckedCreateInput) {
+  async apply(data: any) {
     return await prisma.application.create({ data });
   }
 
@@ -46,7 +45,22 @@ export class JobRepository {
     return await prisma.application.findMany({
       where: { job: { employerId } },
       include: { job: true, candidate: { select: { id: true, name: true, email: true, resumeUrl: true } } },
-      orderBy: { createdAt: 'desc' }
+      orderBy: { createdAt: 'desc' },
+    });
+  }
+
+  async findApplicationById(id: string) {
+    return await prisma.application.findUnique({
+      where: { id },
+      include: { job: true, candidate: true },
+    });
+  }
+
+  async updateApplicationStatus(id: string, status: string) {
+    return await prisma.application.update({
+      where: { id },
+      data: { status: status as any },
+      include: { job: true, candidate: true },
     });
   }
 
@@ -54,7 +68,7 @@ export class JobRepository {
     return await prisma.application.findMany({
       where: { candidateId },
       include: { job: { include: { company: true } } },
-      orderBy: { createdAt: 'desc' }
+      orderBy: { createdAt: 'desc' },
     });
   }
 }

@@ -1,72 +1,30 @@
-# AI-Ready Job Portal
+# AI Job Portal - Full Stack Technical Assessment
 
-A production-ready SaaS application with an AI Resume Matching API, Automated Job Aggregation Scraper, and comprehensive Dashboards.
+A Next Generation Job Portal connecting Employers and Candidates, featuring modern job aggregation, role-based dashboards, and AI-ready endpoints.
 
-## Features
-- **Authentication**: JWT Auth, Refresh Tokens, RBAC (Admin, Employer, Candidate).
-- **Core Jobs API**: Full CRUD, Search, Filter, Pagination.
-- **AI Resume Matching**: Endpoints designed to compare resumes vs job descriptions.
-- **Automated Job Scraper**: Built with Node-cron to aggregate jobs automatically from public APIs.
-- **Dashboards**: Fully functional Next.js 15 UI with modern SaaS design and Tailwind CSS.
-- **Containerization**: Docker Compose setup for Backend, Frontend, Postgres, and Redis.
-- **CI/CD & Testing**: GitHub Actions workflow and Jest Unit Tests.
-- **API Documentation**: Integrated Swagger/OpenAPI and a Postman collection.
+## 🚀 Features Implemented
+* **Module 1 (Auth):** JWT-based Auth, Refresh Tokens, Role-Based Access Control (Admin, Employer, Candidate).
+* **Module 2 (Job Portal):** CRUD operations for Jobs. Candidate job filtering, searching, and application tracking.
+* **Module 3 (REST APIs):** Fully built Express.js backend with strict Zod validations. 
+* **Module 4 (Database):** Relational schema via PostgreSQL and Prisma ORM.
+* **Module 5 & 6 (Scraper):** Automated API job scraping (Remotive API) via Node-Cron (Runs every 6 hours).
+* **Module 7 (Dashboard):** Rich analytics dashboard for Admins and metrics for Employers/Candidates.
+* **Module 8 (Frontend):** Responsive Next.js 15 UI with Tailwind CSS and Shadcn UI.
+* **Bonus Features Built:**
+  - **Swagger/OpenAPI** (`/api-docs` endpoint)
+  - **Docker** (`docker-compose.yml` included)
+  - **Rate Limiting** (Configured via `express-rate-limit`)
+  - **AI Resume API** (Mocked endpoint at `/api/v1/ai/match-resume`)
 
-## Tech Stack
-**Frontend**: Next.js 15 (App Router), TypeScript, TailwindCSS, Shadcn UI, React Query, Zod.
-**Backend**: Node.js, Express, TypeScript, Prisma, PostgreSQL, Redis.
+## 🛠️ Tech Stack
+* **Frontend:** Next.js (App Router), React, Tailwind CSS, Axios, React Query
+* **Backend:** Node.js, Express.js, TypeScript
+* **Database:** PostgreSQL, Prisma ORM
 
-## Setup Instructions
+## ⚙️ Local Setup Instructions
 
-This project is built for zero-friction setup.
-
-1. **Clone the repository**
-   ```bash
-   git clone <repo>
-   cd job-portal
-   ```
-
-2. **Copy Environment Variables**
-   ```bash
-   cp .env.example .env
-   ```
-
-3. **Start the Database Services**
-   ```bash
-   docker-compose up -d postgres redis
-   ```
-
-4. **Install Dependencies & Run Backend**
-   ```bash
-   cd backend
-   npm install
-   npx prisma generate
-   npx prisma migrate dev
-   npm run dev
-   ```
-
-5. **Install Dependencies & Run Frontend**
-   ```bash
-   cd ../frontend
-   npm install
-   npm run dev
-   ```
-
-### Running with full Docker Setup
-You can also run the entire stack (Frontend + Backend + DB) via Docker:
+**1. Clone the repository and install dependencies**
 ```bash
-docker-compose up -d
-```
-
-## API Documentation
-Once the backend is running, access the Swagger documentation at:
-`http://localhost:5000/api-docs`
-
-A Postman collection `job-portal-collection.json` is also available in the root directory.
-
-## Testing
-To run the backend Jest unit tests:
-```bash
-cd backend
-npm test
-```
+git clone <repository-url>
+cd <project-folder>
+npm install

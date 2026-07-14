@@ -10,8 +10,10 @@ import applicationRoutes from './routes/application.routes';
 import dashboardRoutes from './routes/dashboard.routes';
 import scraperRoutes from './routes/scraper.routes';
 import aiRoutes from './routes/ai.routes';
+import profileRoutes from './routes/profile.routes';
 import swaggerUi from 'swagger-ui-express';
 import { swaggerDocument } from './docs/swagger';
+import { apiRateLimiter } from './middlewares/rateLimiter';
 
 // Initialize express app
 const app: Application = express();
@@ -22,6 +24,7 @@ app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
+app.use(apiRateLimiter);
 
 // --- Base Application Routes ---
 
@@ -48,6 +51,7 @@ app.use('/api/v1/applications', applicationRoutes);
 app.use('/api/v1/dashboard', dashboardRoutes);
 app.use('/api/v1/scrape/jobs', scraperRoutes);
 app.use('/api/v1/ai', aiRoutes);
+app.use('/api/v1/profile', profileRoutes);
 
 // Handle undefined routes (This was catching your /api request)
 app.all('*', notFoundHandler);

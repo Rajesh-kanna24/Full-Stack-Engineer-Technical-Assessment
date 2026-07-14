@@ -1,3 +1,4 @@
+// File: src/services/scraper.service.ts
 import axios from 'axios';
 import prisma from '../database/prisma';
 import cron from 'node-cron';
@@ -9,14 +10,11 @@ export class ScraperService {
     let errors = 0;
 
     try {
-      // Mocking a public API feed (e.g. Remotive or similar public job board)
-      // We will use a mock response for this technical assessment to guarantee it works without API keys
-      const mockJobs = [
-        { url: 'https://example.com/job/1', title: 'Frontend Engineer', company: 'Tech Corp', description: 'React and Next.js expert needed.', skills: ['React', 'Next.js'], location: 'Remote', postedDate: new Date() },
-        { url: 'https://example.com/job/2', title: 'Backend Developer', company: 'Data Inc', description: 'Node.js and Prisma expert needed.', skills: ['Node.js', 'PostgreSQL'], location: 'New York', postedDate: new Date() },
-      ];
+      // Fetching real data from a public job board API (Remotive)
+      const response = await axios.get('https://remotive.com/api/remote-jobs?limit=15');
+      const jobs = response.data.jobs || [];
 
-      for (const job of mockJobs) {
+      for (const job of jobs) {
         try {
           const exists = await prisma.scrapedJob.findUnique({ where: { url: job.url } });
           if (exists) {
@@ -24,16 +22,19 @@ export class ScraperService {
             continue;
           }
 
+          // Strip heavy HTML from description for DB storage
+          const cleanDescription = job.description.replace(/<[^>]*>?/gm, '').substring(0, 2000);
+
           await prisma.scrapedJob.create({
             data: {
-              source: 'MockPublicAPI',
+              source: 'Remotive API',
               url: job.url,
               title: job.title,
-              company: job.company,
-              description: job.description,
-              skills: job.skills,
-              location: job.location,
-              postedDate: job.postedDate,
+              company: job.company_name,
+              description: cleanDescription,
+              skills: job.tags || [],
+              location: job.candidate_required_location || 'Remote',
+              postedDate: new Date(job.publication_date),
             }
           });
           added++;
@@ -42,6 +43,7 @@ export class ScraperService {
         }
       }
     } catch (error) {
+      console.error('Failed to fetch from public scraper API:', error);
       errors++;
     }
 
