@@ -30,6 +30,9 @@ describe('Auth API', () => {
   });
 
   it('should login the user', async () => {
+    // FIX: Clear existing tokens before logging in to prevent @unique constraint crashes on fast test runs
+    await prisma.refreshToken.deleteMany();
+
     const res = await request(app)
       .post('/api/v1/auth/login')
       .send({ email: testUser.email, password: testUser.password });
