@@ -10,6 +10,7 @@ jobs:
   backend-test:
     runs-on: ubuntu-latest
     
+    # 1. Added Redis to services alongside Postgres
     services:
       postgres:
         image: postgres:15
@@ -24,9 +25,19 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
     - uses: actions/checkout@v4
+    
     - name: Use Node.js 18
       uses: actions/setup-node@v4
       with:
@@ -42,6 +53,13 @@ jobs:
       working-directory: ./backend
       run: npx prisma generate
       
+    # 2. Added DB Push to create the tables before testing
+    - name: Push Database Schema
+      working-directory: ./backend
+      env:
+        DATABASE_URL: postgresql://postgres:postgres@localhost:5432/jobportal_test?schema=public
+      run: npx prisma db push
+      
     - name: Run tests
       working-directory: ./backend
       run: npm run test
@@ -49,11 +67,14 @@ jobs:
         DATABASE_URL: postgresql://postgres:postgres@localhost:5432/jobportal_test?schema=public
         JWT_SECRET: testsecret
         JWT_REFRESH_SECRET: testrefreshsecret
+        # 3. Added REDIS_URL to satisfy your env.ts validation
+        REDIS_URL: redis://localhost:6379
 
   frontend-build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+    
     - name: Use Node.js 18
       uses: actions/setup-node@v4
       with:
