@@ -1,6 +1,9 @@
 {
   "name": "job-portal-backend",
   "version": "1.0.0",
+  "engines": {
+    "node": "22.x"
+  },
   "description": "Backend API for Job Portal",
   "main": "dist/index.js",
   "scripts": {
