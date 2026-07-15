@@ -33,7 +33,7 @@ export default function LandingPage() {
             <p className="mt-6 max-w-2xl text-lg text-slate-300">Bring employers, candidates, and analytics together in one secure SaaS experience with modern dashboards, role-based access, and real-time job aggregation.</p>
             <div className="mt-10 flex flex-wrap gap-4">
               <Button asChild size="lg" className="rounded-full bg-blue-500 px-6 hover:bg-blue-400"><Link href="/jobs">Explore jobs</Link></Button>
-              <Button asChild size="lg" variant="outline" className="rounded-full border-white/15 px-6 text-white hover:bg-white/10"><Link href="/register">Post a job</Link></Button>
+              <Button asChild size="lg" variant="outline" className="rounded-full bg-blue-500 border-white/15 px-6 text-white hover:bg-white/10"><Link href="/register">Post a job</Link></Button>
             </div>
           </div>
           <div className="rounded-3xl border border-white/10 bg-white/10 p-8 shadow-2xl backdrop-blur-xl">
